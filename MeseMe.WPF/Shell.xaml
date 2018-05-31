@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MeseMe.WPF"
         xmlns:regions="http://prismlibrary.com/"
         xmlns:constants="clr-namespace:MeseMe.Infrastructure;assembly=MeseMe.Infrastructure"
+        xmlns:constants1="clr-namespace:MeseMe.Infrastructure.Constants;assembly=MeseMe.Infrastructure"
         mc:Ignorable="d"
         Title="Shell" Height="450" Width="800">
     <Grid>
@@ -18,17 +19,17 @@
 			    <RowDefinition Height="Auto" />
 			    <RowDefinition />
 		    </Grid.RowDefinitions>
-		    <ContentControl Grid.Row="1" regions:RegionManager.RegionName="{x:Static constants:RegionNames.MenuRegion}" />
+		    <ContentControl Grid.Row="1" regions:RegionManager.RegionName="{x:Static constants1:RegionNames.MenuRegion}" />
 	    </Grid>
 	    <Grid Grid.Column="1" Background="#FFE7E7E7">
 		    <Grid.RowDefinitions>
 			    <RowDefinition />
 			    <RowDefinition />
-			    <RowDefinition />
+			    <RowDefinition Height="200" />
 		    </Grid.RowDefinitions>
-		    <ContentControl Background="RosyBrown" Margin="30, 30, 30, 0" Grid.Row="0" regions:RegionManager.RegionName="{x:Static constants:RegionNames.ShellTopRegion}" />
-		    <ContentControl Background="LightSkyBlue" Margin="30, 15" Grid.Row="1" regions:RegionManager.RegionName="{x:Static constants:RegionNames.ShellMiddleRegion}" />
-		    <ContentControl Background="SeaGreen" Margin="30, 0, 30, 30" Grid.Row="2" regions:RegionManager.RegionName="{x:Static constants:RegionNames.ShellBottomRegion}" />
+		    <ContentControl Background="RosyBrown" Margin="30, 30, 30, 0" Grid.Row="0" regions:RegionManager.RegionName="{x:Static constants1:RegionNames.ShellTopRegion}" />
+		    <ContentControl Background="LightSkyBlue" Margin="30, 15" Grid.Row="1" regions:RegionManager.RegionName="{x:Static constants1:RegionNames.ShellMiddleRegion}" />
+		    <ContentControl Background="SeaGreen" Margin="30, 0, 30, 30" Grid.Row="2" regions:RegionManager.RegionName="{x:Static constants1:RegionNames.ShellBottomRegion}" />
 	    </Grid>
 	</Grid>
 </Window>

@@ -1,4 +1,4 @@
-﻿namespace MeseMe.Infrastructure
+﻿namespace MeseMe.Infrastructure.Constants
 {
 	public static class RegionNames
 	{

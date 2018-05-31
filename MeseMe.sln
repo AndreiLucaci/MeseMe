@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeseMe.Infrastructure", "Me
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeseMe.Models", "MeseMe.Models\MeseMe.Models.csproj", "{6614D81B-FE3D-4616-A571-B7EB78FE328E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{309DFB59-0BEC-401D-82F7-36091E75B489}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeseMe.MessageBoxModule", "MeseMe.MessageBoxModule\MeseMe.MessageBoxModule.csproj", "{9DF6A9E9-E741-404F-BEC2-A0991E0F2265}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,9 +31,16 @@ Global
 		{6614D81B-FE3D-4616-A571-B7EB78FE328E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6614D81B-FE3D-4616-A571-B7EB78FE328E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6614D81B-FE3D-4616-A571-B7EB78FE328E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DF6A9E9-E741-404F-BEC2-A0991E0F2265}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DF6A9E9-E741-404F-BEC2-A0991E0F2265}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DF6A9E9-E741-404F-BEC2-A0991E0F2265}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DF6A9E9-E741-404F-BEC2-A0991E0F2265}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9DF6A9E9-E741-404F-BEC2-A0991E0F2265} = {309DFB59-0BEC-401D-82F7-36091E75B489}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA593677-0CE9-47BC-B99B-4A1A63F8F815}
