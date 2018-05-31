@@ -11,12 +11,12 @@ namespace MeseMe.WPF
 		   // return new Shell();
 	    //}
 
-	    protected override IModuleCatalog CreateModuleCatalog()
+	    protected override void ConfigureModuleCatalog()
 	    {
-		    return base.CreateModuleCatalog();
-		    //var moduleCatalog = (ModuleCatalog) ModuleCatalog;
-		    //moduleCatalog.AddModule();
-	    }
+		    base.ConfigureModuleCatalog();
+			var moduleCatalog = (ModuleCatalog)ModuleCatalog;
+			moduleCatalog.AddModule(typeof(MeseMe.MessageBoxModule.MessageBoxModule));
+		}
 
 	    protected override void InitializeShell()
 	    {
