@@ -13,6 +13,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{309D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeseMe.MessageBoxModule", "MeseMe.MessageBoxModule\MeseMe.MessageBoxModule.csproj", "{9DF6A9E9-E741-404F-BEC2-A0991E0F2265}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{E9423223-3729-4442-AB56-0B07CF4EEE7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeseMe.Server", "MeseMe.Server\MeseMe.Server.csproj", "{F279CCEF-6514-4D93-AD19-00EF85BE74C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeseMe.ServerRunner", "MeseMe.ServerRunner\MeseMe.ServerRunner.csproj", "{9B9755D2-2C5E-40BF-B790-1502A120066E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeseMe.ServerLogger", "MeseMe.ServerLogger\MeseMe.ServerLogger.csproj", "{2E6CDBBA-6937-4B03-96D8-250E802BA61B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeseMe.Handshake", "MeseMe.Handshake\MeseMe.Handshake.csproj", "{5AE36D85-2F5F-48BF-AD5B-EB7D8E91E2FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,12 +45,31 @@ Global
 		{9DF6A9E9-E741-404F-BEC2-A0991E0F2265}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DF6A9E9-E741-404F-BEC2-A0991E0F2265}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DF6A9E9-E741-404F-BEC2-A0991E0F2265}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F279CCEF-6514-4D93-AD19-00EF85BE74C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F279CCEF-6514-4D93-AD19-00EF85BE74C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F279CCEF-6514-4D93-AD19-00EF85BE74C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F279CCEF-6514-4D93-AD19-00EF85BE74C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B9755D2-2C5E-40BF-B790-1502A120066E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B9755D2-2C5E-40BF-B790-1502A120066E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B9755D2-2C5E-40BF-B790-1502A120066E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B9755D2-2C5E-40BF-B790-1502A120066E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E6CDBBA-6937-4B03-96D8-250E802BA61B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E6CDBBA-6937-4B03-96D8-250E802BA61B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E6CDBBA-6937-4B03-96D8-250E802BA61B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E6CDBBA-6937-4B03-96D8-250E802BA61B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AE36D85-2F5F-48BF-AD5B-EB7D8E91E2FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AE36D85-2F5F-48BF-AD5B-EB7D8E91E2FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AE36D85-2F5F-48BF-AD5B-EB7D8E91E2FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AE36D85-2F5F-48BF-AD5B-EB7D8E91E2FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9DF6A9E9-E741-404F-BEC2-A0991E0F2265} = {309DFB59-0BEC-401D-82F7-36091E75B489}
+		{F279CCEF-6514-4D93-AD19-00EF85BE74C0} = {E9423223-3729-4442-AB56-0B07CF4EEE7A}
+		{9B9755D2-2C5E-40BF-B790-1502A120066E} = {E9423223-3729-4442-AB56-0B07CF4EEE7A}
+		{2E6CDBBA-6937-4B03-96D8-250E802BA61B} = {E9423223-3729-4442-AB56-0B07CF4EEE7A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA593677-0CE9-47BC-B99B-4A1A63F8F815}
