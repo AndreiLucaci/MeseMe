@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeseMe.WPF", "MeseMe.WPF\MeseMe.WPF.csproj", "{223EF073-3ADE-45B0-9F2D-411CAFF4E3EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeseMe.Infrastructure", "MeseMe.Infrastructure\MeseMe.Infrastructure.csproj", "{8BC144A6-876D-4998-827B-74627C3FB59F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{223EF073-3ADE-45B0-9F2D-411CAFF4E3EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{223EF073-3ADE-45B0-9F2D-411CAFF4E3EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{223EF073-3ADE-45B0-9F2D-411CAFF4E3EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BC144A6-876D-4998-827B-74627C3FB59F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BC144A6-876D-4998-827B-74627C3FB59F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BC144A6-876D-4998-827B-74627C3FB59F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BC144A6-876D-4998-827B-74627C3FB59F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
