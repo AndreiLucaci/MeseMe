@@ -1,8 +1,11 @@
 ﻿using System;
+using System.IO;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using MeseMe.Communicator;
 using MeseMe.Contracts.Implementations.Events;
 using MeseMe.Contracts.Interfaces.Models;
+using MeseMe.Server.Engine.Exceptions;
 
 namespace MeseMe.Server.Engine.Communication
 {
@@ -21,10 +24,26 @@ namespace MeseMe.Server.Engine.Communication
 		{
 			while (true)
 			{
-				var messageProtocol = await MessageCommunicator.ReadAsync(_meseClient.TcpClient);
+				try
+				{
+					var messageProtocol = await MessageCommunicator.ReadAsync(_meseClient.TcpClient);
 
-				MessageProtocolReceived?.Invoke(this, new MessageProtocolReceivedEventArgs(messageProtocol));
+					MessageProtocolReceived?.Invoke(this, new MessageProtocolReceivedEventArgs(messageProtocol));
+				}
+				catch (IOException exception)
+				{
+					ThrowDisconnectException(exception);
+				}
+				catch (SocketException exception)
+				{
+					ThrowDisconnectException(exception);
+				}
 			}
+		}
+
+		private void ThrowDisconnectException(Exception exception)
+		{
+			throw new ClientDisconnectedException(_meseClient, exception);
 		}
 	}
 }

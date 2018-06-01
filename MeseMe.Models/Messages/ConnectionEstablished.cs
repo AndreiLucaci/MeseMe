@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using MeseMe.Models.Users;
 
 namespace MeseMe.Models.Messages
 {
+	[Serializable]
 	public class ConnectionEstablished
 	{
 		public User Me { get; set; }
-		public IEnumerable<User> Others { get; set; }
+		public User[] Others { get; set; }
 	}
 }

@@ -12,18 +12,25 @@ namespace MeseMe.Communicator
 	{
 		public static async Task<IMessageProtocol> ReadAsync(TcpClient client)
 		{
-			var bytes = new byte[Handshake.Message.BufferSize];
+			var bytes = new byte[Handshake.Buffers.BufferSize];
 			var messageBuilder = new MessageByteBuilder();
 
-			var ns = client.GetStream();
-
-			int length;
-			while ((length = await ns.ReadAsync(bytes, 0, bytes.Length)) != 0)
+			if (client.Connected)
 			{
-				var incommingData = new byte[length];
-				Array.Copy(bytes, 0, incommingData, 0, length);
+				var ns = client.GetStream();
 
-				messageBuilder.AddPart(incommingData);
+				int length;
+				while ((length = await ns.ReadAsync(bytes, 0, bytes.Length)) != 0)
+				{
+					var incommingData = new byte[length];
+					Array.Copy(bytes, 0, incommingData, 0, length);
+
+					messageBuilder.AddPart(incommingData);
+					if (length < Handshake.Buffers.BufferSize)
+					{
+						break;
+					}
+				}
 			}
 
 			var messageProtocol = messageBuilder.ToMessageProtocol();
@@ -33,14 +40,18 @@ namespace MeseMe.Communicator
 
 		public static async Task<int> WriteAsync(TcpClient client, IMessageProtocol messageProtocol)
 		{
-			var ns = client.GetStream();
-
-			if (ns.CanWrite)
+			if (client.Connected)
 			{
-				var bytes = MessageCoder.Encode(messageProtocol);
-				await ns.WriteAsync(bytes, 0, bytes.Length);
+				var ns = client.GetStream();
 
-				return bytes.Length;
+				if (ns.CanWrite)
+				{
+					var bytes = MessageCoder.Encode(messageProtocol);
+					await ns.WriteAsync(bytes, 0, bytes.Length);
+					await ns.FlushAsync();
+
+					return bytes.Length;
+				}
 			}
 
 			return 0;
@@ -48,13 +59,17 @@ namespace MeseMe.Communicator
 
 		public static async Task<int> WriteAsync(TcpClient client, byte[] bytes)
 		{
-			var ns = client.GetStream();
-
-			if (ns.CanWrite)
+			if (client.Connected)
 			{
-				await ns.WriteAsync(bytes, 0, bytes.Length);
+				var ns = client.GetStream();
 
-				return bytes.Length;
+				if (ns.CanWrite)
+				{
+					await ns.WriteAsync(bytes, 0, bytes.Length);
+					await ns.FlushAsync();
+
+					return bytes.Length;
+				}
 			}
 
 			return 0;

@@ -20,5 +20,10 @@ namespace MeseMe.Server.Engine.Models
 			};
 			TcpClient = client;
 		}
+
+		public override string ToString()
+		{
+			return User.ToString();
+		}
 	}
 }

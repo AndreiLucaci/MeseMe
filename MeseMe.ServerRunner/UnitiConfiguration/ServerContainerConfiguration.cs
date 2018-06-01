@@ -30,10 +30,15 @@ namespace MeseMe.ServerRunner.UnitiConfiguration
 
 		private static void ConfigureMessageProtocolProcessor(IUnityContainer container)
 		{
+			var clienstPool = container.Resolve<IClientsPool>();
+
 			container.RegisterInstance<IMessageProtocolProcessor>(
-				new MeseMessageProtocolProcessorDecorator(
-					new DoNothingMessageProtocolProcessor(),
-					container.Resolve<IClientsPool>()
+				new MeseDisconnectMessageProtocolDecorator(
+					new MeseMessageProtocolProcessorDecorator(
+						new DoNothingMessageProtocolProcessor(),
+						clienstPool
+					),
+					clienstPool
 				)
 			);
 		}
