@@ -7,8 +7,8 @@
     <ProjectGuid>{2E6CDBBA-6937-4B03-96D8-250E802BA61B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MeseMe.ServerLogger</RootNamespace>
-    <AssemblyName>MeseMe.ServerLogger</AssemblyName>
+    <RootNamespace>MeseMe.ConsoleLogger</RootNamespace>
+    <AssemblyName>MeseMe.ConsoleLogger</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

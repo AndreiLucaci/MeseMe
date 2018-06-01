@@ -9,5 +9,21 @@
 		public static MessageType Message = new MessageType {Type = MessageTypes.Message};
 		public static MessageType ClientConnection = new MessageType {Type = MessageTypes.ClientConnection};
 		public static MessageType ClientDisconnected = new MessageType {Type = MessageTypes.ClientDisconnected};
+
+		public override bool Equals(object obj)
+		{
+			return obj is MessageType type &&
+				   Type == type.Type;
+		}
+
+		protected bool Equals(MessageType other)
+		{
+			return Type == other.Type;
+		}
+
+		public override int GetHashCode()
+		{
+			return Type.GetHashCode();
+		}
 	}
 }

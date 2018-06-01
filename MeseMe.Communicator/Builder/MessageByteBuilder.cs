@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using MeseMe.Communicator.Helpers;
+﻿using MeseMe.Communicator.Helpers;
 using MeseMe.Contracts.Interfaces.Models;
 
 namespace MeseMe.Communicator.Builder
@@ -18,11 +17,14 @@ namespace MeseMe.Communicator.Builder
 
 		private void Append(byte[] array)
 		{
-			var rv = new byte[Bytes.Length + array.Length];
+			var rv = new byte[Bytes?.Length ?? default(int) + array.Length];
 			var offset = 0;
 
-			System.Buffer.BlockCopy(Bytes, 0, rv, offset, Bytes.Length);
-			offset += Bytes.Length;
+			if (Bytes != null)
+			{
+				System.Buffer.BlockCopy(Bytes, 0, rv, offset, Bytes.Length);
+				offset += Bytes.Length;
+			}
 			System.Buffer.BlockCopy(array, 0, rv, offset, array.Length);
 
 			Bytes = rv;
@@ -30,7 +32,7 @@ namespace MeseMe.Communicator.Builder
 
 		public IMessageProtocol ToMessageProtocol()
 		{
-			return MessageCoder.Decode(Bytes.ToArray());
+			return Bytes?.Length > 0 ? MessageCoder.Decode(Bytes) : null;
 		}
 	}
 }

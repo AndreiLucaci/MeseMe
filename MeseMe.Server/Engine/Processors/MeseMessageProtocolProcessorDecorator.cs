@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
 using MeseMe.Communicator;
+using MeseMe.ConsoleLogger;
 using MeseMe.Contracts.Implementations.Models;
 using MeseMe.Contracts.Interfaces.DataStructure;
 using MeseMe.Contracts.Interfaces.Models;
 using MeseMe.Contracts.Interfaces.Processors;
 using MeseMe.Models.Messages;
-using MeseMe.ServerLogger;
 
 namespace MeseMe.Server.Engine.Processors
 {
@@ -23,7 +23,7 @@ namespace MeseMe.Server.Engine.Processors
 
 		public async Task ProcessAsync(IMessageProtocol messageProtocol)
 		{
-			if (messageProtocol.Header == MessageType.Message)
+			if (Equals(messageProtocol.Header, MessageType.Message))
 			{
 				var message = messageProtocol.GetDataAs<Message>();
 

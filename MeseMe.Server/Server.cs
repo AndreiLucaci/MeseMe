@@ -1,17 +1,18 @@
-﻿using System.Net.Sockets;
+﻿using System;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using MeseMe.Communicator;
+using MeseMe.ConsoleLogger;
 using MeseMe.Contracts.Interfaces.Communication;
 using MeseMe.Contracts.Interfaces.DataStructure;
 using MeseMe.Contracts.Interfaces.Models;
 using MeseMe.Contracts.Interfaces.Processors;
 using MeseMe.Server.Engine.Communication;
+using MeseMe.Server.Engine.Exceptions;
 using MeseMe.Server.Engine.Models;
-using MeseMe.ServerLogger;
 
 using static MeseMe.Communicator.Constants.Handshake;
-
 
 namespace MeseMe.Server
 {
@@ -40,15 +41,21 @@ namespace MeseMe.Server
 		public void Start()
 		{
 			_handshakeListening = true;
-
-			new Thread(async () => await HandshakeAsync() ) { IsBackground = true }.Start();
+			try
+			{
+				new Thread(async () => await HandshakeAsync()) {IsBackground = true}.Start();
+			}
+			catch (Exception exception)
+			{
+				Logger.Error(exception.ToString());
+			}
 		}
 
 		public async Task HandshakeAsync()
 		{
 			try
 			{
-				_handshakeListener = new TcpListener(Ip.Any, Ports.HanshakePort);
+				_handshakeListener = new TcpListener(Ip.ConnectionIpAddress, Ports.HanshakePort);
 				_handshakeListener.Start();
 
 				Logger.Info("Server is listening...");
@@ -70,6 +77,8 @@ namespace MeseMe.Server
 
 		public void ShutDown()
 		{
+			Logger.WriteLine("Server shutting down.", ConsoleColor.Red);
+
 			if (_handshakeListening)
 			{
 				_handshakeListening = false;
@@ -80,33 +89,67 @@ namespace MeseMe.Server
 					connectedTcpClient.Value.TcpClient.Close();
 				}
 			}
+
+			Logger.WriteLine("Server shutdown succesfully.", ConsoleColor.Red);
 		}
 		
 		private async Task HandleClientAsync(TcpClient client)
 		{
-			var meseClient = await GetMeseClientInformation(client);
-
-			_clientsPool.Add(meseClient);
-
-			if (meseClient != null)
+			try
 			{
-				IClientHandler meseClientHandler;
+				var meseClient = await GetMeseClientInformation(client);
 
-				if ((meseClientHandler = await _clientService.CompleteHandshakeAsync(meseClient)) != null)
+				if (meseClient != null)
 				{
-					meseClientHandler.MessageProtocolReceived += async (sender, args) =>
-					{
-						await _messageProtocolProcessor.ProcessAsync(args?.MessageProtocol);
-					};
+					Logger.Info($"Client connected: {meseClient?.User}");
+					_clientsPool.Add(meseClient);
 
-					await meseClientHandler.StartListeningAsync();
+					IClientHandler meseClientHandler;
+					if ((meseClientHandler = await _clientService.CompleteHandshakeAsync(meseClient)) != null)
+					{
+						meseClientHandler.MessageProtocolReceived += async (sender, args) =>
+						{
+							if (args?.MessageProtocol == null) return;
+							await _messageProtocolProcessor.ProcessAsync(args?.MessageProtocol);
+						};
+
+						await meseClientHandler.StartListeningAsync();
+					}
 				}
+			}
+			catch (ClientDisconnectedException ex)
+			{
+				ForcelyDisconnectClient(ex.Client);
+			}
+			catch (Exception ex)
+			{
+				Logger.Error(ex.ToString());
+			}
+		}
+
+		private void ForcelyDisconnectClient(IClient exClient)
+		{
+			_clientsPool.Remove(exClient);
+
+			Logger.Info($"Client disconnected abruptely. {exClient}");
+		}
+
+		private void WaitForClient(TcpClient client)
+		{
+			var maxTries = 10;
+			var tries = 0;
+
+			while (!client.Connected || tries++ < maxTries)
+			{
+				Thread.Sleep(100);
 			}
 		}
 
 		private async Task<IClient> GetMeseClientInformation(TcpClient client)
 		{
 			MeseClient meseClient = null;
+
+			WaitForClient(client);
 
 			var messageProtocol = await MessageCommunicator.ReadAsync(client);
 

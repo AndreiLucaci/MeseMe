@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using MeseMe.Communicator;
+using MeseMe.ConsoleLogger;
 using MeseMe.Contracts.Implementations.Models;
 using MeseMe.Contracts.Interfaces.DataStructure;
 using MeseMe.Contracts.Interfaces.Models;
@@ -23,9 +24,11 @@ namespace MeseMe.Server.Engine.Processors
 
 		public async Task ProcessAsync(IMessageProtocol messageProtocol)
 		{
-			if (messageProtocol != null && messageProtocol.Header == MessageType.ClientDisconnected)
+			if (messageProtocol != null && Equals(messageProtocol.Header, MessageType.ClientDisconnected))
 			{
 				var user = messageProtocol.GetDataAs<User>();
+
+				Logger.Info($"Client disconnected. {user}");
 
 				await BroadcastClientDisconnectedAsync(user);
 
@@ -45,7 +48,10 @@ namespace MeseMe.Server.Engine.Processors
 				};
 
 				var tcpClients = _clientsPool.ConnectedClients.Select(i => i.Value.TcpClient).ToArray();
-				await MessageCommunicator.BroadcastAsync(tcpClients, messageProtocol);
+				if (tcpClients.Any())
+				{
+					await MessageCommunicator.BroadcastAsync(tcpClients, messageProtocol);
+				}
 			}
 		}
 	}

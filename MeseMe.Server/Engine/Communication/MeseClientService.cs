@@ -36,7 +36,7 @@ namespace MeseMe.Server.Engine.Communication
 			var connectionEstablished = new ConnectionEstablished
 			{
 				Me = meseClient.User,
-				Others = others.Select(i => i.User)
+				Others = others.Select(i => i.User).ToArray()
 			};
 
 			var messageProtocol = new MessageProtocol

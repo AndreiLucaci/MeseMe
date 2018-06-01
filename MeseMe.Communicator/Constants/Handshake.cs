@@ -9,7 +9,7 @@ namespace MeseMe.Communicator.Constants
 		    public const ushort HanshakePort = 34534;
 	    }
 
-	    public static class Message
+	    public static class Buffers
 	    {
 		    public const ushort BufferSize = 8192;
 		}
