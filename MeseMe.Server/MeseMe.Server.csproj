@@ -43,15 +43,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\Clients\MeseClient.cs" />
-    <Compile Include="Engine\Communication\MessageBuilder.cs" />
+    <Compile Include="Engine\Models\MeseClient.cs" />
+    <Compile Include="Engine\DataStructure\MeseClientsPool.cs" />
+    <Compile Include="Engine\Communication\MeseClientService.cs" />
+    <Compile Include="Engine\Processors\DoNothingMessageProtocolProcessor.cs" />
+    <Compile Include="Engine\Communication\MeseClientHandler.cs" />
+    <Compile Include="Engine\Processors\MeseDisconnectMessageProtocolDecorator.cs" />
+    <Compile Include="Engine\Processors\MeseMessageProtocolProcessorDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MeseMe.Handshake\MeseMe.Handshake.csproj">
-      <Project>{5AE36D85-2F5F-48BF-AD5B-EB7D8E91E2FC}</Project>
-      <Name>MeseMe.Handshake</Name>
+    <ProjectReference Include="..\MeseMe.Communicator\MeseMe.Communicator.csproj">
+      <Project>{C4EF1692-A787-4D84-8084-011E283DAB04}</Project>
+      <Name>MeseMe.Communicator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MeseMe.Contracts\MeseMe.Contracts.csproj">
+      <Project>{8F3FD70D-6869-4468-B551-8DFE9F26A246}</Project>
+      <Name>MeseMe.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\MeseMe.Models\MeseMe.Models.csproj">
       <Project>{6614D81B-FE3D-4616-A571-B7EB78FE328E}</Project>

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using MeseMe.Models.Users;
 
 namespace MeseMe.Models.Messages
 {
 	public class ConnectionEstablished
 	{
-		public Guid Me { get; set; }
-		public IEnumerable<Guid> Others { get; set; }
+		public User Me { get; set; }
+		public IEnumerable<User> Others { get; set; }
 	}
 }

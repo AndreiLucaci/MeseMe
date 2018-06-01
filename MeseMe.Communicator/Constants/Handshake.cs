@@ -1,23 +1,22 @@
 ﻿using System.Net;
 
-namespace MeseMe.Handshake
+namespace MeseMe.Communicator.Constants
 {
-    public static class HS
+    public static class Handshake
     {
 	    public static class Ports
 	    {
 		    public const ushort HanshakePort = 34534;
-		    public const ushort MessagingPort = 34535;
-		}
+	    }
 
 	    public static class Message
 	    {
-		    public const ushort BufferSize = 1024;
+		    public const ushort BufferSize = 8192;
 		}
 
 		public static class Ip
 	    {
-		    public static IPAddress ConnectionIpAddress = IPAddress.Parse("localhost");
+		    public static IPAddress ConnectionIpAddress = IPAddress.Parse("127.0.0.1");
 			public static IPAddress Any = IPAddress.Any;
 	    }
 	}

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MeseMe.HS")]
+[assembly: AssemblyTitle("MeseMe.Communicator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MeseMe.HS")]
+[assembly: AssemblyProduct("MeseMe.Communicator")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("5ae36d85-2f5f-48bf-ad5b-eb7d8e91e2fc")]
+[assembly: Guid("c4ef1692-a787-4d84-8084-011e283dab04")]
 
 // Version information for an assembly consists of the following four values:
 //
