@@ -47,6 +47,7 @@
     <Compile Include="Engine\Notifier\INotifierEvents.cs" />
     <Compile Include="Engine\Notifier\ITwoWayNotifier.cs" />
     <Compile Include="Engine\Notifier\TwoWayNotifier.cs" />
+    <Compile Include="Engine\Processors\ClientConnectedMessageProtocolProcessDecorator.cs" />
     <Compile Include="Engine\Processors\ClientDisconnectedMessageProtocolProcessDecorator.cs" />
     <Compile Include="Engine\Processors\ConnectionEstablishedMessageProtocolProcessorDecorator.cs" />
     <Compile Include="Engine\Processors\DoNothingMessageProtocolProcessor.cs" />

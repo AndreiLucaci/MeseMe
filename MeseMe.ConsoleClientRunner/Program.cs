@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using MeseMe.ConsoleClientRunner.UnityConfiguration;
 using MeseMe.ConsoleLogger;
@@ -32,11 +30,6 @@ namespace MeseMe.ConsoleClientRunner
 			Console.ReadKey();
 
 			await client.ShutDownAsync();
-
-			//while (true)
-			//{
-
-			//}
 		}
 
 		static async Task Connect(Client.Client client)
@@ -64,6 +57,20 @@ namespace MeseMe.ConsoleClientRunner
 				Logger.Info("Succesfully connected to the server");
 				Logger.WriteLine($"My current information: {connectionEstablished.Me}");
 				Logger.WriteLine($"Online users: {connectionEstablished.Others.Length}");
+			};
+
+			client.UserDisconnected += (sender, args) =>
+			{
+				var user = args.Model;
+				Logger.Write("Friend disconnected: ");
+				Logger.WriteLine(user.ToString(), ConsoleColor.Cyan);
+			};
+
+			client.UserConnected += (sender, args) =>
+			{
+				var user = args.Model;
+				Logger.Write("Friend connected: ");
+				Logger.WriteLine(user.ToString(), ConsoleColor.Green);
 			};
 		}
 	}

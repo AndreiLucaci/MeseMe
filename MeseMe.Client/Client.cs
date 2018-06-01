@@ -121,6 +121,19 @@ namespace MeseMe.Client
 			_notifier.ConnectedToServer += NotifierOnConnectedToServer;
 			_notifier.MessageReceived += NotifierOnMessageReceived;
 			_notifier.UserDisconnected += NotifierOnUserDisconnected;
+			_notifier.UserConnected += NotifierOnUserConnected;
+		}
+
+		private void NotifierOnUserConnected(object sender, NotifierEventArgs<User> notifierEventArgs)
+		{
+			if (notifierEventArgs?.Model != null)
+			{
+				var user = notifierEventArgs.Model;
+
+				Friends.Add(user);
+
+				UserConnected?.Invoke(this, notifierEventArgs);
+			}
 		}
 
 		private void NotifierOnUserDisconnected(object sender, NotifierEventArgs<User> notifierEventArgs)
@@ -131,7 +144,7 @@ namespace MeseMe.Client
 
 				Friends.Remove(user);
 
-				UserDisconnected?.Invoke(sender, notifierEventArgs);
+				UserDisconnected?.Invoke(this, notifierEventArgs);
 			}
 		}
 
@@ -140,6 +153,7 @@ namespace MeseMe.Client
 			_notifier.ConnectedToServer -= NotifierOnConnectedToServer;
 			_notifier.MessageReceived -= NotifierOnMessageReceived;
 			_notifier.UserDisconnected -= NotifierOnUserDisconnected;
+			_notifier.UserConnected -= NotifierOnUserConnected;
 		}
 
 		private void NotifierOnMessageReceived(object sender, NotifierEventArgs<Message> notifierEventArgs)

@@ -31,15 +31,16 @@ namespace MeseMe.ConsoleClientRunner.UnityConfiguration
 			INotifierActions notifier = container.Resolve<ITwoWayNotifier>();
 
 			container.RegisterInstance<IMessageProtocolProcessor>(
-				new ClientDisconnectedMessageProtocolProcessDecorator(
-					new MessageReceivedMessageProtocolProcessorDecorator(
-						new ConnectionEstablishedMessageProtocolProcessorDecorator(
-							new DoNothingMessageProtocolProcessor(
+				new ClientConnectedMessageProtocolProcessDecorator(
+					new ClientDisconnectedMessageProtocolProcessDecorator(
+						new MessageReceivedMessageProtocolProcessorDecorator(
+							new ConnectionEstablishedMessageProtocolProcessorDecorator(
+								new DoNothingMessageProtocolProcessor(
+									notifier),
 								notifier),
 							notifier),
 						notifier),
-					notifier
-				)
+					notifier)
 			);
 		}
 	}
