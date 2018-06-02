@@ -57,7 +57,7 @@ namespace MeseMe.Server
 		{
 			try
 			{
-				_handshakeListener = new TcpListener(Ip.ConnectionIpAddress, Ports.HanshakePort);
+				_handshakeListener = new TcpListener(Ip.Any, Ports.HanshakePort);
 				_handshakeListener.Start();
 
 				Logger.Info("Server is listening...");
