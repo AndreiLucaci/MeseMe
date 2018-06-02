@@ -1,6 +1,7 @@
 ﻿using MeseMe.Contracts.Interfaces.Communication;
 using MeseMe.Contracts.Interfaces.DataStructure;
 using MeseMe.Contracts.Interfaces.Processors;
+using MeseMe.Contracts.Interfaces.Settings;
 using MeseMe.Server.Engine.Communication;
 using MeseMe.Server.Engine.DataStructure;
 using MeseMe.Server.Engine.Processors;
@@ -11,7 +12,7 @@ namespace MeseMe.ServerRunner.UnitiConfiguration
 {
 	public static class ServerContainerConfiguration
 	{
-		public static void ConfigureServer(IUnityContainer container)
+		public static IUnityContainer WithServer(this IUnityContainer container)
 		{
 			container.RegisterSingleton<IClientsPool, MeseClientsPool>();
 
@@ -23,9 +24,19 @@ namespace MeseMe.ServerRunner.UnitiConfiguration
 				new InjectionConstructor(
 					new ResolvedParameter<IClientService>(),
 					new ResolvedParameter<IMessageProtocolProcessor>(),
-					container.Resolve<IClientsPool>()
+					container.Resolve<IClientsPool>(),
+					new ResolvedParameter<ISettings>()
 				)
 			);
+
+			return container;
+		}
+
+		public static IUnityContainer WithSettings(this IUnityContainer container)
+		{
+			container.RegisterType<ISettings, Settings.Settings>();
+
+			return container;
 		}
 
 		private static void ConfigureMessageProtocolProcessor(IUnityContainer container)

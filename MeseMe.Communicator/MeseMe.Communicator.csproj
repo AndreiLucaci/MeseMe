@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builder\MessageByteBuilder.cs" />
+    <Compile Include="Excptions\ConnectionTimeoutException.cs" />
     <Compile Include="Helpers\MessageCoder.cs" />
     <Compile Include="Constants\Handshake.cs" />
     <Compile Include="MessageCommunicator.cs" />

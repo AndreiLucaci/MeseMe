@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Controls;
-using MeseMe.FriendsListModule.ViewModels;
 using MeseMe.Infrastructure.Events;
 using MeseMe.Models.Users;
 using Prism.Events;

@@ -1,5 +1,6 @@
 ﻿using System;
 using MeseMe.Client.Engine.Events;
+using MeseMe.Contracts.Interfaces.Settings;
 using MeseMe.Infrastructure.EventPayloads;
 using MeseMe.Infrastructure.Events;
 using MeseMe.Models.Messages;
@@ -10,13 +11,15 @@ namespace MeseMe.WPF.Wrapper
 {
 	public class ClientWrapper
 	{
+		private readonly ISettings _settings;
 		private readonly IEventAggregator _eventAggregator;
 		private readonly Client.Client _client;
 
 		private User _currentToUser;
 
-		public ClientWrapper(IEventAggregator eventAggregator, Client.Client client)
+		public ClientWrapper(IEventAggregator eventAggregator, Client.Client client, ISettings settings)
 		{
+			_settings = settings;
 			_eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
 			_client = client ?? throw new ArgumentNullException(nameof(client));
 
@@ -25,9 +28,10 @@ namespace MeseMe.WPF.Wrapper
 
 		private void InitializeEvents()
 		{
-			_eventAggregator.GetEvent<ConnectToServerEvent>().Subscribe(async name =>
+			_eventAggregator.GetEvent<ConnectToServerEvent>().Subscribe(async payload =>
 			{
-				await _client.ConnectAsync(name);
+				_settings.Uri = payload.Host;
+				await _client.ConnectAsync(payload.Name, _settings);
 			});
 			_eventAggregator.GetEvent<SendMessageTextEvent>().Subscribe(async text =>
 			{

@@ -10,6 +10,7 @@ using MeseMe.Contracts.Interfaces.Communication;
 using MeseMe.Contracts.Interfaces.DataStructure;
 using MeseMe.Contracts.Interfaces.Models;
 using MeseMe.Contracts.Interfaces.Processors;
+using MeseMe.Contracts.Interfaces.Settings;
 using MeseMe.Server.Engine.Communication;
 using MeseMe.Server.Engine.Exceptions;
 using MeseMe.Server.Engine.Models;
@@ -22,17 +23,19 @@ namespace MeseMe.Server
 	{
 		private TcpListener _handshakeListener;
 		private readonly IClientsPool _clientsPool;
+		private readonly ISettings _settings;
 		private readonly IClientService _clientService;
 		private readonly IMessageProtocolProcessor _messageProtocolProcessor;
 
 		private volatile bool _handshakeListening;
 
 		public Server(IClientService clientService, IMessageProtocolProcessor protocolProcessor,
-			IClientsPool clientsPool)
+			IClientsPool clientsPool, ISettings settings)
 		{
 			_clientService = clientService;
 			_messageProtocolProcessor = protocolProcessor;
 			_clientsPool = clientsPool;
+			_settings = settings;
 		}
 
 		~Server()
@@ -57,7 +60,7 @@ namespace MeseMe.Server
 		{
 			try
 			{
-				_handshakeListener = new TcpListener(Ip.Any, Ports.HanshakePort);
+				_handshakeListener = new TcpListener(Ip.Any, _settings.Port);
 				_handshakeListener.Start();
 
 				Logger.Info("Server is listening...");

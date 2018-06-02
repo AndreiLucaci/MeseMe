@@ -73,8 +73,7 @@
     </Compile>
     <Compile Include="MessageBoxModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Unity\UnityConfiguration.cs" />
-    <Compile Include="ViewModels\ConnectViewModel.cs" />
+    <Compile Include="ViewModels\MessageBoxViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -83,6 +82,14 @@
     <ProjectReference Include="..\MeseMe.Client\MeseMe.Client.csproj">
       <Project>{42002850-5144-4B05-A17E-498342CCF73F}</Project>
       <Name>MeseMe.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MeseMe.Communicator\MeseMe.Communicator.csproj">
+      <Project>{C4EF1692-A787-4D84-8084-011E283DAB04}</Project>
+      <Name>MeseMe.Communicator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MeseMe.Contracts\MeseMe.Contracts.csproj">
+      <Project>{8F3FD70D-6869-4468-B551-8DFE9F26A246}</Project>
+      <Name>MeseMe.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\MeseMe.Infrastructure\MeseMe.Infrastructure.csproj">
       <Project>{8BC144A6-876D-4998-827B-74627C3FB59F}</Project>
@@ -99,5 +106,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
