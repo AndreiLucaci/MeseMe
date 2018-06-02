@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MeseMe.Communicator;
 using MeseMe.ConsoleLogger;
 using MeseMe.Contracts.Implementations.Models;
@@ -14,7 +15,7 @@ namespace MeseMe.Server.Engine.Processors
 		private readonly IMessageProtocolProcessor _innerProcessor;
 		private readonly IClientsPool _clientsPool;
 
-		public MeseMessageProtocolProcessorDecorator(IMessageProtocolProcessor innerProcessor, 
+		public MeseMessageProtocolProcessorDecorator(IMessageProtocolProcessor innerProcessor,
 			IClientsPool clientsPool)
 		{
 			_innerProcessor = innerProcessor;
@@ -27,17 +28,23 @@ namespace MeseMe.Server.Engine.Processors
 			{
 				var message = messageProtocol.GetDataAs<Message>();
 
-				var meseClient = _clientsPool.FindClient(message.To.Id);
-
-				if (meseClient != null)
+				try
 				{
-					await MessageCommunicator.WriteAsync(meseClient.TcpClient, messageProtocol);
-				}
-				else
-				{
-					Logger.Error($"Client {message.To.Name} not found");
-				}
+					var meseClient = _clientsPool.FindClient(message.To.Id);
 
+					if (meseClient != null)
+					{
+						await MessageCommunicator.WriteAsync(meseClient.TcpClient, messageProtocol);
+					}
+					else
+					{
+						Logger.Error($"Client {message.To.Name} not found. ");
+					}
+				}
+				catch (Exception ex)
+				{
+					Logger.Error($"Exception: {ex}.");
+				}
 				return;
 			}
 			await _innerProcessor.ProcessAsync(messageProtocol);

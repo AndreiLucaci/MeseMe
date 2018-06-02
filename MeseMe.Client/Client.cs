@@ -23,7 +23,7 @@ namespace MeseMe.Client
 		private readonly ITwoWayNotifier _notifier;
 		private readonly IMessageProtocolProcessor _protocolProcessor;
 		private readonly TcpClient _tcpClient;
-		private IClient _me;
+		public IClient Me { get; private set; }
 
 		public List<User> Friends { get; set; }
 
@@ -71,7 +71,7 @@ namespace MeseMe.Client
 			var message = new Message
 			{
 				To = to,
-				From = _me.User,
+				From = Me.User,
 				Text = text
 			};
 
@@ -93,7 +93,7 @@ namespace MeseMe.Client
 			var messageProtocol = new MessageProtocol
 			{
 				Header = MessageType.ClientDisconnected,
-				Data = _me.User
+				Data = Me.User
 			};
 
 			await MessageCommunicator.WriteAsync(_tcpClient, messageProtocol);
@@ -126,9 +126,9 @@ namespace MeseMe.Client
 
 		private void NotifierOnUserConnected(object sender, NotifierEventArgs<User> notifierEventArgs)
 		{
-			if (notifierEventArgs?.Model != null)
+			if (notifierEventArgs?.Payload != null)
 			{
-				var user = notifierEventArgs.Model;
+				var user = notifierEventArgs.Payload;
 
 				Friends.Add(user);
 
@@ -138,9 +138,9 @@ namespace MeseMe.Client
 
 		private void NotifierOnUserDisconnected(object sender, NotifierEventArgs<User> notifierEventArgs)
 		{
-			if (notifierEventArgs?.Model != null)
+			if (notifierEventArgs?.Payload != null)
 			{
-				var user = notifierEventArgs.Model;
+				var user = notifierEventArgs.Payload;
 
 				Friends.Remove(user);
 
@@ -164,10 +164,10 @@ namespace MeseMe.Client
 		private void NotifierOnConnectedToServer(object sender,
 			NotifierEventArgs<ConnectionEstablished> notifierEventArgs)
 		{
-			if (notifierEventArgs?.Model != null)
+			if (notifierEventArgs?.Payload != null)
 			{
-				_me = new MeseClient(_tcpClient, notifierEventArgs.Model.Me);
-				Friends = notifierEventArgs.Model.Others.ToList();
+				Me = new MeseClient(_tcpClient, notifierEventArgs.Payload.Me);
+				Friends = notifierEventArgs.Payload.Others.ToList();
 
 				ConnectedToServer?.Invoke(this, notifierEventArgs);
 			}

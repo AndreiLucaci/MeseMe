@@ -8,8 +8,6 @@ namespace MeseMe.ConsoleClientRunner
 {
 	class Program
 	{
-		private static bool _running;
-
 		static void Main(string[] args)
 		{
 			var unityContainer = new UnityContainer();
@@ -44,7 +42,7 @@ namespace MeseMe.ConsoleClientRunner
 		{
 			client.MessageReceived += (sender, args) =>
 			{
-				var message = args.Model;
+				var message = args.Payload;
 
 				Logger.Write($"Received message from", ConsoleColor.Blue);
 				Logger.Info(message.From.ToString(), true);
@@ -53,7 +51,7 @@ namespace MeseMe.ConsoleClientRunner
 
 			client.ConnectedToServer += (sender, args) =>
 			{
-				var connectionEstablished = args.Model;
+				var connectionEstablished = args.Payload;
 				Logger.Info("Succesfully connected to the server");
 				Logger.WriteLine($"My current information: {connectionEstablished.Me}");
 				Logger.WriteLine($"Online users: {connectionEstablished.Others.Length}");
@@ -61,14 +59,14 @@ namespace MeseMe.ConsoleClientRunner
 
 			client.UserDisconnected += (sender, args) =>
 			{
-				var user = args.Model;
+				var user = args.Payload;
 				Logger.Write("Friend disconnected: ");
 				Logger.WriteLine(user.ToString(), ConsoleColor.Cyan);
 			};
 
 			client.UserConnected += (sender, args) =>
 			{
-				var user = args.Model;
+				var user = args.Payload;
 				Logger.Write("Friend connected: ");
 				Logger.WriteLine(user.ToString(), ConsoleColor.Green);
 			};

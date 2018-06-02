@@ -28,5 +28,6 @@ namespace MeseMe.Models.Users
 		{
 			return $"Name: {Name}, GUID: {Id}";
 		}
+
 	}
 }
