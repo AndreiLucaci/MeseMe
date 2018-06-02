@@ -78,6 +78,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Unity\ConfigureClient.cs" />
+    <Compile Include="ViewModels\Subscribers\ConnectToServerSubscriber.cs" />
+    <Compile Include="Wrapper\ClientWrapper.cs" />
     <Page Include="Shell.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -120,6 +123,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MeseMe.Client\MeseMe.Client.csproj">
+      <Project>{42002850-5144-4B05-A17E-498342CCF73F}</Project>
+      <Name>MeseMe.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MeseMe.Contracts\MeseMe.Contracts.csproj">
+      <Project>{8F3FD70D-6869-4468-B551-8DFE9F26A246}</Project>
+      <Name>MeseMe.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MeseMe.FriendsListModule\MeseMe.FriendsListModule.csproj">
+      <Project>{FAFBB09F-CB80-4A9E-99EC-436343CD76B6}</Project>
+      <Name>MeseMe.FriendsListModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MeseMe.Infrastructure\MeseMe.Infrastructure.csproj">
       <Project>{8bc144a6-876d-4998-827b-74627c3fb59f}</Project>
       <Name>MeseMe.Infrastructure</Name>
@@ -127,6 +142,14 @@
     <ProjectReference Include="..\MeseMe.MessageBoxModule\MeseMe.MessageBoxModule.csproj">
       <Project>{9df6a9e9-e741-404f-bec2-a0991e0f2265}</Project>
       <Name>MeseMe.MessageBoxModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MeseMe.MessageListModule\MeseMe.MessageListModule.csproj">
+      <Project>{344F10E6-8D65-4507-8B66-6CA5449928D1}</Project>
+      <Name>MeseMe.MessageListModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MeseMe.Models\MeseMe.Models.csproj">
+      <Project>{6614D81B-FE3D-4616-A571-B7EB78FE328E}</Project>
+      <Name>MeseMe.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,11 +4,11 @@ namespace MeseMe.Client.Engine.Events
 {
 	public class NotifierEventArgs<T> : EventArgs
 	{ 
-		public NotifierEventArgs(T model)
+		public NotifierEventArgs(T payload)
 		{
-			Model = model;
+			Payload = payload;
 		}
 
-		public T Model { get; set; }
+		public T Payload { get; set; }
 	}
 }

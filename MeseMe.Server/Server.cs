@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using MeseMe.Communicator;
 using MeseMe.ConsoleLogger;
+using MeseMe.Contracts.Implementations.Models;
 using MeseMe.Contracts.Interfaces.Communication;
 using MeseMe.Contracts.Interfaces.DataStructure;
 using MeseMe.Contracts.Interfaces.Models;
@@ -119,7 +121,7 @@ namespace MeseMe.Server
 			}
 			catch (ClientDisconnectedException ex)
 			{
-				ForcelyDisconnectClient(ex.Client);
+				await ForcelyDisconnectClient(ex.Client);
 			}
 			catch (Exception ex)
 			{
@@ -127,11 +129,24 @@ namespace MeseMe.Server
 			}
 		}
 
-		private void ForcelyDisconnectClient(IClient exClient)
+		private async Task ForcelyDisconnectClient(IClient user)
 		{
-			_clientsPool.Remove(exClient);
+			if (user?.User != null && _clientsPool.Remove(user.User.Id))
+			{
+				var messageProtocol = new MessageProtocol
+				{
+					Header = MessageType.ClientDisconnected,
+					Data = user.User
+				};
 
-			Logger.Info($"Client disconnected abruptely. {exClient}");
+				var tcpClients = _clientsPool.ConnectedClients.Select(i => i.Value.TcpClient).ToArray();
+				if (tcpClients.Any())
+				{
+					await MessageCommunicator.BroadcastAsync(tcpClients, messageProtocol);
+				}
+			}
+
+			Logger.Info($"Client disconnected abruptely. {user}");
 		}
 
 		private void WaitForClient(TcpClient client)

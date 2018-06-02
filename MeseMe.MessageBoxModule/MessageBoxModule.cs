@@ -1,5 +1,5 @@
-﻿using MeseMe.Infrastructure.Constants;
-using Microsoft.Practices.Unity;
+﻿using System;
+using MeseMe.Infrastructure.Constants;
 using Prism.Modularity;
 using Prism.Regions;
 
@@ -12,12 +12,10 @@ namespace MeseMe.MessageBoxModule
 	public class MessageBoxModule : IModule
 	{
 		private readonly IRegionManager _regionManager;
-		private readonly IUnityContainer _container;
 
-		public MessageBoxModule(IRegionManager regionManager, IUnityContainer container)
+		public MessageBoxModule(IRegionManager regionManager)
 		{
-			_regionManager = regionManager;
-			_container = container;
+			_regionManager = regionManager ?? throw new ArgumentNullException(nameof(regionManager));
 		}
 
 		public void Initialize()

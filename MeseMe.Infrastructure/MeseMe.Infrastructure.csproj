@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Prism, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.6.3.0\lib\net45\Prism.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,8 +44,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\ModuleNames.cs" />
+    <Compile Include="EventPayloads\UserConnectionPayload.cs" />
+    <Compile Include="Events\ConnectedToServerEvent.cs" />
+    <Compile Include="Events\ConnectToServerEvent.cs" />
+    <Compile Include="Events\MessageReceivedEvent.cs" />
+    <Compile Include="Events\MessageSentEvent.cs" />
+    <Compile Include="Events\SelectUserEvent.cs" />
+    <Compile Include="Events\SendMessageTextEvent.cs" />
+    <Compile Include="Events\UserConnectedEvent.cs" />
+    <Compile Include="Events\UserDisconnectedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants\RegionNames.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MeseMe.Models\MeseMe.Models.csproj">
+      <Project>{6614D81B-FE3D-4616-A571-B7EB78FE328E}</Project>
+      <Name>MeseMe.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
