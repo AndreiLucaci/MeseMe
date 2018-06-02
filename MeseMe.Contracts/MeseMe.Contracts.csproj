@@ -50,6 +50,7 @@
     <Compile Include="Implementations\Models\MessageTypes.cs" />
     <Compile Include="Interfaces\Models\IClient.cs" />
     <Compile Include="Interfaces\Processors\IMessageProtocolProcessor.cs" />
+    <Compile Include="Interfaces\Settings\ISettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

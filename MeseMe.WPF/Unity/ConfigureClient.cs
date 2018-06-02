@@ -1,6 +1,7 @@
 ﻿using MeseMe.Client.Engine.Notifier;
 using MeseMe.Client.Engine.Processors;
 using MeseMe.Contracts.Interfaces.Processors;
+using MeseMe.Contracts.Interfaces.Settings;
 using MeseMe.WPF.Wrapper;
 using Microsoft.Practices.Unity;
 using Prism.Events;
@@ -26,12 +27,22 @@ namespace MeseMe.WPF.Unity
 
 		public static IUnityContainer WithClientWrapper(this IUnityContainer container)
 		{
+			container.WithSettings();
+
 			container.RegisterInstance(new ClientWrapper(
 					container.Resolve<IEventAggregator>(),
-					container.Resolve<Client.Client>()
+					container.Resolve<Client.Client>(),
+					container.Resolve<ISettings>()
 				),
 				new ContainerControlledLifetimeManager()
 			);
+
+			return container;
+		}
+
+		public static IUnityContainer WithSettings(this IUnityContainer container)
+		{
+			container.RegisterType<ISettings, Settings.Settings>();
 
 			return container;
 		}

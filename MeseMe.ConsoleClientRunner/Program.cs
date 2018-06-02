@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MeseMe.ConsoleClientRunner.UnityConfiguration;
 using MeseMe.ConsoleLogger;
+using MeseMe.Contracts.Interfaces.Settings;
 using Unity;
 
 namespace MeseMe.ConsoleClientRunner
@@ -12,30 +13,33 @@ namespace MeseMe.ConsoleClientRunner
 		{
 			var unityContainer = new UnityContainer();
 
-			ClientContainerConfiguration.ConfigureClient(unityContainer);
+			unityContainer
+				.WithClient()
+				.WithSettings();
 
 			var client = unityContainer.Resolve<Client.Client>();
+			var settings = unityContainer.Resolve<ISettings>();
 
 			RegisterEvents(client);
 
-			StartAsync(client).Wait();
+			StartAsync(client, settings).Wait();
 		}
 
-		private static async Task StartAsync(Client.Client client)
+		private static async Task StartAsync(Client.Client client, ISettings settings)
 		{
-			await Connect(client);
+			await Connect(client, settings);
 
 			Console.ReadKey();
 
 			await client.ShutDownAsync();
 		}
 
-		static async Task Connect(Client.Client client)
+		static async Task Connect(Client.Client client, ISettings settings)
 		{
 			Logger.WriteLine("Name: ", ConsoleColor.Red);
 			var name = Console.ReadLine();
 
-			await client.ConnectAsync(name);
+			await client.ConnectAsync(name, settings);
 		}
 
 		static void RegisterEvents(Client.Client client)

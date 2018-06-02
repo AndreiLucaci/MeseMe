@@ -18,6 +18,11 @@ namespace MeseMe.Communicator.Constants
 	    {
 		    public static IPAddress ConnectionIpAddress = IPAddress.Parse("127.0.0.1");
 			public static IPAddress Any = IPAddress.Any;
+
+		    public static bool TryParse(string ip, out IPAddress ipAddress)
+		    {
+			    return IPAddress.TryParse(ip, out ipAddress);
+		    }
 	    }
 	}
 }

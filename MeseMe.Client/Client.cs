@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,9 +9,11 @@ using MeseMe.Client.Engine.Events;
 using MeseMe.Client.Engine.Models;
 using MeseMe.Client.Engine.Notifier;
 using MeseMe.Communicator;
+using MeseMe.Communicator.Excptions;
 using MeseMe.Contracts.Implementations.Models;
 using MeseMe.Contracts.Interfaces.Models;
 using MeseMe.Contracts.Interfaces.Processors;
+using MeseMe.Contracts.Interfaces.Settings;
 using MeseMe.Models.Messages;
 using MeseMe.Models.Users;
 
@@ -39,14 +42,15 @@ namespace MeseMe.Client
 			InitializeEvents();
 		}
 
-		public async Task ConnectAsync(string name)
+		public async Task ConnectAsync(string name, ISettings settings)
 		{
 			if (string.IsNullOrEmpty(name))
 			{
 				return;
 			}
 
-			await _tcpClient.ConnectAsync(Ip.ConnectionIpAddress, Ports.HanshakePort);
+			var host = ResolveHostname(settings);
+			await ConnectAsyncWithTimeout(_tcpClient, host, settings.Port);
 
 			var messageProtocol = new MessageProtocol
 			{
@@ -101,14 +105,44 @@ namespace MeseMe.Client
 			_tcpClient.Close();
 		}
 
-		private  void Listen()
+		private async Task ConnectAsyncWithTimeout(TcpClient client, string host, ushort port)
+		{
+			var timeOut = TimeSpan.FromSeconds(5);
+			var cancellationCompletionSource = new TaskCompletionSource<bool>();
+			try
+			{
+				using (var cts = new CancellationTokenSource(timeOut))
+				{
+					var task = client.ConnectAsync(host, port);
+
+					using (cts.Token.Register(() => cancellationCompletionSource.TrySetResult(true)))
+					{
+						if (task != await Task.WhenAny(task, cancellationCompletionSource.Task))
+						{
+							throw new OperationCanceledException(cts.Token);
+						}
+					}
+				}
+			}
+			catch (OperationCanceledException)
+			{
+				throw new ConnectionTimeoutException("Timeout.");
+			}
+		}
+
+		private string ResolveHostname(ISettings settings)
+		{
+			return !settings.UseUri && !Ip.TryParse(settings.Uri, out var ipAddress) ? ipAddress.ToString() : settings.Uri;
+		}
+
+		private void Listen()
 		{
 			new Thread(
 				async () =>
 				{
 					while (_listening)
 					{
-						while(_tcpClient.Available <= 0) Thread.Sleep(100);
+						while (_tcpClient.Available <= 0) Thread.Sleep(100);
 
 						var messageProtocol = await MessageCommunicator.ReadAsync(_tcpClient);
 						await _protocolProcessor.ProcessAsync(messageProtocol);

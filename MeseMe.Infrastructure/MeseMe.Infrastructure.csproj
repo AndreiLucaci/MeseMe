@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\ModuleNames.cs" />
+    <Compile Include="EventPayloads\HandshakeConnectionPayload.cs" />
     <Compile Include="EventPayloads\UserConnectionPayload.cs" />
     <Compile Include="Events\ConnectedToServerEvent.cs" />
     <Compile Include="Events\ConnectToServerEvent.cs" />

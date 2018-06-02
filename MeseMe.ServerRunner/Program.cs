@@ -9,7 +9,9 @@ namespace MeseMe.ServerRunner
 		static void Main(string[] args)
 		{
 			var unityContainer = new UnityContainer();
-			ServerContainerConfiguration.ConfigureServer(unityContainer);
+			unityContainer
+				.WithSettings()
+				.WithServer();
 
 			var server = unityContainer.Resolve<Server.Server>();
 
