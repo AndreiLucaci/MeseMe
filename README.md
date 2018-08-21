@@ -39,4 +39,4 @@ This is licenced under MIT.
 http://andreilucaci.ro/
 
 -----------
-**31.05.2018 - 01.06.2018** - *Happy 33rd aniversary birthday Mom and Dad*
+**31.05.2018 - 01.06.2018** - *Happy 33rd aniversary to my Mom and Dad, you guys rock*
